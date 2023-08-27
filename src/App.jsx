@@ -2,24 +2,12 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [animals, setAnimals] = useState([
-    {
-      id: 99,
-      name: 'Scooby',
-      type: 'Dog',
-      age: 12
-    },
-    {
-      id: 89,
-      name: 'Woody',
-      type: 'Bird',
-      age: '9'
-    }
-  ]);
+  const [animals, setAnimals] = useState([]);
 
   const search = async (q) => {
-    const response = await fetch('http://localhost:8080?' + new URLSearchParams(q));
-
+    const response = await fetch('http://localhost:8080?' + new URLSearchParams({q}));
+    const data = await response.json();
+    setAnimals(data);
   }
 
   return (
@@ -28,8 +16,8 @@ function App() {
 
       <input 
         type = "text" 
-        placeholder = "Search"
-        onChange = {e => console.log(e.target.value)}
+        placeholder = "Try search dog, cat etc"
+        onChange = {(e) => search(e.target.value)}
       />
 
       <ul>
